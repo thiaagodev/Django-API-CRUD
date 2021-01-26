@@ -19,14 +19,15 @@ from django.urls import path, include
 
 from rest_framework import routers
 
-from books.api import viewsets as booksviewsets
+from books.views import BooksViewSet, OrderBooksByDate
 
 route = routers.DefaultRouter()
 
-route.register(r'books', booksviewsets.BooksViewSet, basename="Books")
+route.register(r'books', BooksViewSet, basename="Books")
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include(route.urls))
+    path('', include(route.urls)),
+    path('books/order-by-date', OrderBooksByDate.as_view())
 ]

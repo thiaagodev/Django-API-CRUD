@@ -1,3 +1,15 @@
-from django.shortcuts import render
+from rest_framework import viewsets
+from rest_framework import generics
+from books import serializers
+from books import models
 
-# Create your views here.
+class BooksViewSet(viewsets.ModelViewSet):
+    serializer_class = serializers.BookSerializers
+    queryset = models.Books.objects.all()
+
+class OrderBooksByDate(generics.ListAPIView):
+    def get_queryset(self):
+        queryset = models.Books.objects.order_by('realease_year')
+        return queryset
+    serializer_class = serializers.OrderBooksByDate
+
